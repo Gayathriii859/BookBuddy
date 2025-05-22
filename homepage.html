@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BookBuddy - Your Personalized Book Guide</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f8f1f1;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #ff6b81;
+      color: white;
+      padding: 20px;
+      font-size: 24px;
+    }
+    .intro {
+      margin: 40px 20px;
+      font-size: 18px;
+    }
+    .book-facts {
+      background: #ffdfdf;
+      padding: 20px;
+      margin: 20px;
+      border-radius: 10px;
+    }
+    .book-facts button, button {
+      background: #ff6b81;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 80%;
+    }
+    .login-signup {
+      background: white;
+      padding: 30px;
+      margin: 20px;
+      border-radius: 10px;
+    }
+    .form-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    input {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      width: 80%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📖 Welcome to BookBuddy</h1>
+    <p>Your personalized book recommendation platform!</p>
+  </header>
+  <section class="intro">
+    <h2>Discover New Books Based on Your Taste</h2>
+    <p>Get recommendations, track your reading, and explore the world of books.</p>
+  </section>
+  <section class="book-facts">
+    <h2>📚 Did You Know?</h2>
+    <p id="fact">Loading a fun book fact...</p>
+    <button onclick="newFact()">Get Another Fact</button>
+  </section>
+  <section class="login-signup">
+    <h2>Join BookBuddy</h2>
+    <div class="form-container">
+      <div class="login">
+        <h3>Login</h3>
+        <input type="text" placeholder="Username" id="login-user">
+        <input type="password" placeholder="Password" id="login-pass">
+        <button onclick="login()">Login</button>
+      </div>
+      <div class="signup">
+        <h3>Sign Up</h3>
+        <input type="text" placeholder="Username" id="signup-user">
+        <input type="email" placeholder="Email" id="signup-email">
+        <input type="password" placeholder="Password" id="signup-pass">
+        <button onclick="signup()">Sign Up</button>
+      </div>
+    </div>
+  </section>
+  <script>
+    const facts = [
+      "The world's longest novel is 'À la recherche du temps perdu' by Marcel Proust, with 1.2 million words.",
+      "The first book ever written using a typewriter was 'The Adventures of Tom Sawyer'.",
+      "The Harry Potter series has sold over 500 million copies worldwide!",
+      "Dr. Seuss wrote 'Green Eggs and Ham' using only 50 different words."
+    ];
+
+    function newFact() {
+      const randomIndex = Math.floor(Math.random() * facts.length);
+      document.getElementById("fact").innerText = facts[randomIndex];
+    }
+
+    function signup() {
+      const username = document.getElementById("signup-user").value;
+      const email = document.getElementById("signup-email").value;
+      const password = document.getElementById("signup-pass").value;
+      
+      if (username && email && password) {
+        localStorage.setItem(username, JSON.stringify({ email, password }));
+        alert("Signup successful! You can now log in.");
+      } else {
+        alert("Please fill in all fields.");
+      }
+    }
+
+    function login() {
+      const username = document.getElementById("login-user").value;
+      const password = document.getElementById("login-pass").value;
+      
+      const userData = localStorage.getItem(username);
+      if (userData) {
+        const { password: storedPass } = JSON.parse(userData);
+        if (password === storedPass) {
+          alert("Login successful!");
+          window.location.href = "userdashboard.html";
+        } else {
+          alert("Incorrect password.");
+        }
+      } else {
+        alert("User not found. Please sign up first.");
+      }
+    }
+
+    window.onload = newFact;
+  </script>
+</body>
+</html>

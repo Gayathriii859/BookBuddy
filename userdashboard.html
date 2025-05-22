@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookBuddy Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f5f5f5;
+        }
+
+        header {
+            background: #ff7675;
+            color: white;
+            padding: 15px;
+            font-size: 20px;
+        }
+
+        .book-selection, .recommendation {
+            background: #ffdfdf;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+        select, button {
+            margin: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .recommendation p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        a {
+  display: inline-block;
+  background-color: #ff6b81;
+  color: white;
+  padding: 12px 24px;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+a:hover {
+  background-color: #ff4757;
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>📖 Welcome, <span id="username">User</span>!</h1>
+        <p>Find your next favorite book based on your mood & genre.</p>
+    </header>
+    <a href="menu.html">Main menu</a>
+    <section class="book-selection">
+        <label for="mode">Select a Reading Mode:</label>
+        <select id="mode">
+            <option value="relax">Relax</option>
+            <option value="study">Study</option>
+            <option value="adventure">Adventure</option>
+            <option value="romance">Romance</option>
+            <option value="mystery">Mystery</option>
+            <option value="fantasy">Fantasy</option>
+            <option value="horror">Horror</option>
+        </select>
+
+        <label for="genre">Select a Genre:</label>
+        <select id="genre">
+            <option value="fiction">Fiction</option>
+            <option value="non-fiction">Non-Fiction</option>
+            <option value="mystery">Mystery</option>
+            <option value="fantasy">Fantasy</option>
+            <option value="sci-fi">Science Fiction</option>
+            <option value="historical">Historical</option>
+            <option value="thriller">Thriller</option>
+        </select>
+
+        <button onclick="getRecommendation()">📚 Get Recommendations</button>
+    </section>
+
+    <section class="recommendation">
+        <h2>📕 Your Book Recommendation</h2>
+        <p><strong>Title:</strong> <span id="book-title">-</span></p>
+        <p><strong>Author:</strong> <span id="book-author">-</span></p>
+        <p><strong>Published Year:</strong> <span id="book-year">-</span></p>
+        <p><strong>Summary:</strong> <span id="book-summary">-</span></p>
+    </section>
+
+    <script>
+        // Sample book recommendations
+        const bookRecommendations = [
+            { 
+                mode: "relax", genre: "fiction", 
+                title: "The Alchemist", author: "Paulo Coelho", year: 1988, 
+                summary: "A young shepherd embarks on a journey to discover his destiny."
+            },
+            { 
+                mode: "study", genre: "non-fiction", 
+                title: "Sapiens: A Brief History of Humankind", author: "Yuval Noah Harari", year: 2011, 
+                summary: "Explores the history of human civilization from ancient times to the present."
+            },
+            { 
+                mode: "adventure", genre: "fantasy", 
+                title: "The Hobbit", author: "J.R.R. Tolkien", year: 1937, 
+                summary: "A hobbit embarks on a grand adventure to reclaim a stolen treasure."
+            },
+            { 
+                mode: "romance", genre: "fiction", 
+                title: "Pride and Prejudice", author: "Jane Austen", year: 1813, 
+                summary: "A classic love story set in the 19th century."
+            },
+            { 
+                mode: "mystery", genre: "thriller", 
+                title: "Gone Girl", author: "Gillian Flynn", year: 2012, 
+                summary: "A psychological thriller about a missing woman and hidden secrets."
+    
+            },
+            
+        ];
+
+        // Display username from local storage
+        document.getElementById("username").innerText = localStorage.getItem("username") || "User";
+
+        // Function to get book recommendation
+        function getRecommendation() {
+            const selectedMode = document.getElementById("mode").value;
+            const selectedGenre = document.getElementById("genre").value;
+
+            // Find a book that matches mode and genre
+            const recommendedBook = bookRecommendations.find(book => 
+                book.mode === selectedMode && book.genre === selectedGenre
+            );
+
+            if (recommendedBook) {
+                document.getElementById("book-title").innerText = recommendedBook.title;
+                document.getElementById("book-author").innerText = recommendedBook.author;
+                document.getElementById("book-year").innerText = recommendedBook.year;
+                document.getElementById("book-summary").innerText = recommendedBook.summary;
+            } else {
+                document.getElementById("book-title").innerText = "No book found!";
+                document.getElementById("book-author").innerText = "-";
+                document.getElementById("book-year").innerText = "-";
+                document.getElementById("book-summary").innerText = "Try a different mode or genre.";
+            }
+        }
+    </script>
+
+</body>
+</html>
